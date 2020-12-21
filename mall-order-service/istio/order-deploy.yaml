@@ -1,0 +1,41 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: order-service
+  labels:
+    app: order-service
+spec:
+  replicas: 1
+  template:
+    metadata:
+      name: order-service
+      labels:
+        app: order-service
+    spec:
+      containers:
+        - name: order-service
+          image: 10.11.19.209:5000/mall-order-service:v1.0.0
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 30020
+          env:
+            - name: ACCOUNT_HOST
+              value: account-service:30010
+      restartPolicy: Always
+  selector:
+    matchLabels:
+      app: order-service
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: order-service
+spec:
+  selector:
+    app: order-service
+  ports:
+    - port: 30020
+      name: http
+      nodePort: 30020
+  type: NodePort

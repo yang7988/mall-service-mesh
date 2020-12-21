@@ -1,0 +1,164 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: storage-service
+  namespace: mall
+  labels:
+    app: storage-service
+spec:
+  replicas: 1
+  template:
+    metadata:
+      name: storage-service
+      namespace: mall
+      labels:
+        app: storage-service
+    spec:
+      containers:
+        - name: storage-service
+          image: yang7988/mall-storage-service:v1.0.1
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 30030
+      restartPolicy: Always
+  selector:
+    matchLabels:
+      app: storage-service
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: storage-service
+  namespace: mall
+spec:
+  selector:
+    app: storage-service
+  ports:
+    - port: 30030
+      name: http
+      nodePort: 30030
+  type: NodePort
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: order-service
+  namespace: mall
+  labels:
+    app: order-service
+spec:
+  replicas: 1
+  template:
+    metadata:
+      name: order-service
+      namespace: mall
+      labels:
+        app: order-service
+    spec:
+      containers:
+        - name: order-service
+          image: yang7988/mall-order-service:v1.0.1
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 30020
+      restartPolicy: Always
+  selector:
+    matchLabels:
+      app: order-service
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: order-service
+  namespace: mall
+spec:
+  selector:
+    app: order-service
+  ports:
+    - port: 30020
+      name: http
+      nodePort: 30020
+  type: NodePort
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: account-service
+  namespace: mall
+  labels:
+    app: account-service
+spec:
+  replicas: 1
+  template:
+    metadata:
+      name: account-service
+      namespace: mall
+      labels:
+        app: account-service
+    spec:
+      containers:
+        - name: account-service
+          image: yang7988/mall-account-service:v1.0.1
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 30010
+      restartPolicy: Always
+  selector:
+    matchLabels:
+      app: account-service
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: account-service
+  namespace: mall
+spec:
+  selector:
+    app: account-service
+  ports:
+    - port: 30010
+      name: http
+      nodePort: 30010
+  type: NodePort
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: business-service
+  namespace: mall
+  labels:
+    app: business-service
+spec:
+  replicas: 1
+  template:
+    metadata:
+      name: business-service
+      namespace: mall
+      labels:
+        app: business-service
+    spec:
+      containers:
+        - name: business-service
+          image: yang7988/mall-business-service:v1.0.1
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 30040
+      restartPolicy: Always
+  selector:
+    matchLabels:
+      app: business-service
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: business-service
+  namespace: mall
+spec:
+  selector:
+    app: business-service
+  ports:
+    - port: 30040
+      nodePort: 30040
+      name: http
+  type: NodePort

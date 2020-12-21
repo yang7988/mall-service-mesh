@@ -1,0 +1,77 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: nfs-pv
+  namespace: mall
+spec:
+  capacity:
+    storage: 2Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Recycle
+  storageClassName: slow
+  nfs:
+    path: /data/share
+    server: 10.11.19.209
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: nfs-pvc
+  namespace: mall
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: "slow"
+  resources:
+    requests:
+      storage: 2Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: account-service
+  namespace: mall
+  labels:
+    app: account-service
+spec:
+  replicas: 1
+  template:
+    metadata:
+      name: account-service
+      namespace: mall
+      labels:
+        app: account-service
+    spec:
+      containers:
+        - name: account-service
+          image: yang7988/mall-account-service:v1.0.1
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 30010
+          volumeMounts:
+            - mountPath: /data/project
+              name: nfs
+      restartPolicy: Always
+      volumes:
+        - name: nfs
+          persistentVolumeClaim:
+            claimName: nfs-pvc
+  selector:
+    matchLabels:
+      app: account-service
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: account-service
+  namespace: mall
+spec:
+  selector:
+    app: account-service
+  ports:
+    - port: 30010
+      name: http
+      nodePort: 30010
+  type: NodePort

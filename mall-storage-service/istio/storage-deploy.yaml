@@ -1,0 +1,38 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: storage-service
+  labels:
+    app: storage-service
+spec:
+  replicas: 1
+  template:
+    metadata:
+      name: storage-service
+      labels:
+        app: storage-service
+    spec:
+      containers:
+        - name: storage-service
+          image: 10.11.19.209:5000/mall-storage-service:v1.0.0
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 30030
+      restartPolicy: Always
+  selector:
+    matchLabels:
+      app: storage-service
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: storage-service
+spec:
+  selector:
+    app: storage-service
+  ports:
+    - port: 30030
+      name: http
+      nodePort: 30030
+  type: NodePort

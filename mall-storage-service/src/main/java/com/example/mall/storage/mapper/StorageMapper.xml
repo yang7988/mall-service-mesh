@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mall.storage.mapper.StorageMapper">
+  <resultMap id="BaseResultMap" type="com.example.mall.storage.entity.Storage">
+    <!--@mbg.generated-->
+    <!--@Table t_storage-->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="commodity_code" jdbcType="VARCHAR" property="commodityCode" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="count" jdbcType="INTEGER" property="count" />
+    <result column="version" jdbcType="INTEGER" property="version" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, commodity_code, `name`, `count`, version
+  </sql>
+
+    <update id="decreaseStorage">
+        update t_storage set count = count-#{count} where commodity_code = #{commodityCode}
+    </update>
+</mapper>

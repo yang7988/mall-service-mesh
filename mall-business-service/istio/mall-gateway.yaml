@@ -1,0 +1,120 @@
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: mall-gateway
+  namespace: istio-system
+spec:
+  selector:
+    istio: ingressgateway # use istio default controller
+  servers:
+    - port:
+        number: 80
+        name: http
+        protocol: HTTP
+      hosts:
+        - "*"
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: mall-service
+  namespace: mall
+spec:
+  hosts:
+    - "*"
+  gateways:
+    - istio-system/mall-gateway
+  http:
+    - match:
+        - uri:
+            prefix: /account
+      route:
+        - destination:
+            host: account-service
+            port:
+              number: 30010
+    - match:
+        - uri:
+            prefix: /business
+      route:
+        - destination:
+            host: business-service
+            port:
+              number: 30040
+    - match:
+        - uri:
+            prefix: /order
+      route:
+        - destination:
+            host: order-service
+            port:
+              number: 30020
+    - match:
+        - uri:
+            prefix: /storage
+      route:
+        - destination:
+            host: storage-service
+            port:
+              number: 30030
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: account-service-route
+  namespace: mall
+spec:
+  hosts:
+    - account-service
+  http:
+    - route:
+        - destination:
+            host: account-service
+            port:
+              number: 30010
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: business-service-route
+  namespace: mall
+spec:
+  hosts:
+    - business-service
+  http:
+    - route:
+        - destination:
+            host: business-service
+            port:
+              number: 30040
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: order-service-route
+  namespace: mall
+spec:
+  hosts:
+    - order-service
+  http:
+    - route:
+        - destination:
+            host: order-service
+            port:
+              number: 30020
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: storage-service-route
+  namespace: mall
+spec:
+  hosts:
+    - storage-service
+  http:
+    - route:
+        - destination:
+            host: storage-service
+            port:
+              number: 30030
