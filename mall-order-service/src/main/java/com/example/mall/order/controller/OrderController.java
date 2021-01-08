@@ -3,7 +3,7 @@ package com.example.mall.order.controller;
 import com.example.base.ApiBaseEnum;
 import com.example.base.ApiResponse;
 import com.example.base.ApiResponseEnum;
-import com.example.mall.dto.OrderDTO;
+import com.example.mall.order.dto.OrderDTO;
 import com.example.mall.order.entity.Order;
 import com.example.mall.order.service.OrderService;
 import lombok.extern.slf4j.Slf4j;

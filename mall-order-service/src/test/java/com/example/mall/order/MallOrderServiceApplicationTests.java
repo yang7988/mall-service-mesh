@@ -1,6 +1,6 @@
 package com.example.mall.order;
 
-import com.example.mall.dto.OrderDTO;
+import com.example.mall.order.dto.OrderDTO;
 import com.example.mall.order.service.OrderService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

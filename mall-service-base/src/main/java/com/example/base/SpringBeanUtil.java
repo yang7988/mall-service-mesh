@@ -3,6 +3,7 @@ package com.example.base;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Component;
  * @description:
  */
 @Component
+@DependsOn("restTemplate")
 public class SpringBeanUtil implements ApplicationContextAware {
 
     private static ApplicationContext applicationContext;
