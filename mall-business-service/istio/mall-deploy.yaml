@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: storage-service
-          image: yang7988/mall-storage-service:v1.0.1
+          image: 10.11.24.149:8082/mall-storage-service:v1.0.0
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 30030
@@ -58,7 +58,7 @@ spec:
     spec:
       containers:
         - name: order-service
-          image: yang7988/mall-order-service:v1.0.1
+          image: 10.11.24.149:8082/mall-order-service:v1.0.0
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 30020
@@ -99,7 +99,7 @@ spec:
     spec:
       containers:
         - name: account-service
-          image: yang7988/mall-account-service:v1.0.1
+          image: 10.11.24.149:8082/mall-account-service:v1.0.0
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 30010
@@ -140,7 +140,7 @@ spec:
     spec:
       containers:
         - name: business-service
-          image: yang7988/mall-business-service:v1.0.1
+          image: 10.11.24.149:8082/mall-business-service:v1.0.0
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 30040
